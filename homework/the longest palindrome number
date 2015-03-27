@@ -1,0 +1,47 @@
+//键盘输入任意长度字符串，输出其中最长回文数
+package test;
+import java.util.*;
+public class A {
+	public static void main(String[] args){
+		int ks;
+		int js;
+		int ks1[]=new int[100];//存放得到的回文数的位置
+		int js1[]=new int[100];
+		int l=0;//回文数的位置在数组中的位置
+		int total=1;//回文数的长度
+		Scanner scan=new Scanner(System.in);
+		String scan1=scan.next();//输入的字符串
+		scan.close();
+        char[] str=scan1.toCharArray();//输入的字符串转化为字符数组
+        for(int i=0;i<str.length-1;i++){
+        	next:for(int j=i+1;j<=str.length-1;j++){//字符数组中两个字符两两比较，若有相同的挑出，进一步比较两个字符中间的字母是否对称
+        		if(str[i]== str[j]){
+        			ks=i;
+        			js=j;
+                    for(int k=ks;k<=(js+ks)/2;k++){
+                    	if(str[ks]==str[js]){//若对称进一步比较
+                    		ks++;
+                    		js--;
+                    	}else{
+                    		continue next;
+                    	}              
+                    }
+                    if(j-i>=total){//将比较得出的回文数字符串两个位置开始和结束分别放入数组
+                    	total=j-i;
+                    	ks1[l]=i;//开始的位置
+                    	js1[l]=j;//结束的位置
+                    	l++;//l对应相应的位置
+                    }
+        		}
+        	}
+        }
+	for(int dd=l;dd>=0;dd--){//输出回文数
+	    if(js1[dd]-ks1[dd]==total){//保证全部输出
+	    	for(int sk1=ks1[dd];sk1<=js1[dd];sk1++){
+	    		System.out.print(str[sk1]);//ks1【dd】为开始位置js1[dd]为结束的位置
+	    	}
+	    	System.out.println();//换行
+	    }  
+	}
+	}
+}
