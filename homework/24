@@ -1,0 +1,94 @@
+package test;
+import java.util.*;
+import java.lang.Math.*;
+public class E {
+	public static float number[]=new float[4];
+	public static String result[]=new String[4];
+	public static ArrayList<String> rr=new ArrayList<String>();
+	static{
+		Scanner scan=new Scanner(System.in);
+		number[0]=scan.nextInt();
+		number[1]=scan.nextInt();
+		number[2]=scan.nextInt();
+		number[3]=scan.nextInt();
+		result[0]=(int)number[0]+"";
+		result[1]=(int)number[1]+"";
+		result[2]=(int)number[2]+"";
+		result[3]=(int)number[3]+"";
+		scan.close();
+	}
+	public static void print(){
+		for(String str:rr){
+			System.out.println(str+"=24");
+		}
+	}
+	
+	public static void calculate(int n){
+		if (n==1){
+			if(Math.abs(number[0]-24)<=1e-8){
+				if (rr.contains(result[0])==false){
+					rr.add(result[0]);
+				}
+			}
+		}
+		
+		for(int i=0;i<n;i++){
+			for(int j=i+1;j<n;j++){
+				float a,b;
+				String expa,expb;
+				a=number[i];
+				b=number[j];
+				number[j]=number[n-1];
+				
+				expa=result[i];
+				expb=result[j];
+				result[j]=result[n-1];
+				//加法
+				number[i]=a+b;
+				result[i]="("+expa+"+"+expb+")";
+				calculate(n-1);
+				//乘法
+				number[i]=a*b;
+				result[i]="("+expa+"*"+expb+")";
+				calculate(n-1);
+                                //幂次方
+                                number[i]=pow(a,b);
+                                result[i]="("+expa+"mi"+expb+")";
+                                calculate(n-1);
+
+                                number[i]=pow(b,a);
+                                result[i]="("+expa+"mi"+expb+")";
+                                calculate(n-1);
+				//减法
+				number[i]=a-b;
+				result[i]="("+expa+"-"+expb+")";
+				calculate(n-1);
+				
+				number[i]=b-a;
+				result[i]="("+expb+"-"+expa+")";
+				calculate(n-1);
+				//除法
+				if (a!=0){
+					number[i]=b/a;
+					result[i]="("+expb+"/"+expa+")";
+					calculate(n-1);
+				}
+				if(b!=0){
+					number[i]=a/b;
+					result[i]="("+expa+"/"+expb+")";
+					calculate(n-1);
+				}
+				number[i]=a;
+				number[j]=b;
+				result[i]=expa;
+				result[j]=expb;
+			}
+		}			 		
+	}
+	
+	public static void main(String[] args) {
+		calculate(4);
+		print();
+	}
+
+}
